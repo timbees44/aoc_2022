@@ -1,30 +1,20 @@
 
-# rethink this whole thing
-def prob_1_method(f):
-    data = f.read().strip().split("\n")
-    count = 0
-    for pair in data:
-        p = pair.split(",")
-        start = p[0][:p[0].index("-")]
-        start2 = p[1][:p[1].index("-")]
-        end = p[0][p[0].index("-"):]
-        end2 = p[1][p[1].index("-"):]
-        
-        range1 = range(int(p[0][:p[0].index("-")]), int(p[0][p[0].index("-") + 1:]))
-        range2 = range(int(p[1][:p[1].index("-")]), int(p[1][p[1].index("-") + 1:]))
-        len1 = len(range1)
-        len2 = len(range2)
 
-        if len1 < len2 and start in range2 and end in range2:
+def prob_1_method(f):
+    data = f.read().strip().replace("-", ",").split("\n")
+    count = 0
+    for d in data:
+        pairs = d.split(",")
+        
+        range1 = list(range(int(pairs[0]), int(pairs[1])))
+        range2 = list(range(int(pairs[2]), int(pairs[3])))
+        
+        if all(x in range1 for x in range2):
             count += 1
-        elif len1 > len2 and start2 in range1 and end2 in range1:
+        elif all(x in range2 for x in range1):
             count += 1
-        elif len1 == len2 and start == start2:
-            count += 1
-    
-    print(count)
+        
     return count
-            
 
 def prob_1_test():
     """
@@ -37,6 +27,12 @@ def prob_1_test():
     """
     with open("test_input_1.txt", "r") as f:
         assert prob_1_method(f) == 2
+        
+def prob_1():
+    with open("prod_input.txt", "r") as f:
+        print(prob_1_method(f))
     
 if __name__ == "__main__":
     prob_1_test()
+    print("test 1 passed")
+    prob_1()
