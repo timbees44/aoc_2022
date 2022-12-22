@@ -1,11 +1,13 @@
 def prob_1_method(f):
-    lines = f.readlines()
+    data = f.read().strip().split("\n")
+    print(data)
 
-    stacks = []
-    end = False
-    for line in lines:
-        if not line or line[0] == "m":
-            
+    for i in data:
+        if not i or i[1] == "1":
+            break
+        print(i)
+
+
 def prob_1_test():
     with open("test_input.txt", "r") as f:
         assert prob_1_method(f) == "CMZ"
